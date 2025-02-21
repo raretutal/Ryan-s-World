@@ -1,2 +1,2 @@
 # Ryan-s-World
-UPSCG Hackathon repository
+UPSCG Hackathon 2025 Repository
