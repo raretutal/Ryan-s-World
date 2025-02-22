@@ -6,6 +6,3 @@ Ryan Anthony Retutal    BSCS I
 John Dexter Rico        BSCS I
 Hans Therese Ponce      BSCS I
 George Kristan Señagan  BSCS I
-
-testing testing yeehaw
-test yes test
