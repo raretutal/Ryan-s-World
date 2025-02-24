@@ -52,7 +52,7 @@ export function MenuPanel({ isOpen, onClose, setCurrentSection }: { isOpen: bool
           About Us
         </button>
         <button onClick={() => { setCurrentSection('contact'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
-          Contact
+          Contact Us
         </button>
       </div>
     </div>
