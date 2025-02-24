@@ -8,7 +8,13 @@ export function Navbar({ onMenuClick, setCurrentSection }: { onMenuClick: () => 
         <button onClick={onMenuClick} className="mr-4">
           <Menu className="w-8 h-8 text-[#002833]" />
         </button>
-        <img src="/Logo.png" alt="CertifBAI" className="h-8 App-logo" />
+        <img
+          src="/Logo.png"
+          alt="CertifBAI"
+          className="h-8 App-logo"
+          onClick={() => setCurrentSection('intro')}
+          style={{ cursor: 'pointer' }}
+        />
       </div>
       <div className="flex gap-4">
         <button onClick={() => setCurrentSection('about')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
