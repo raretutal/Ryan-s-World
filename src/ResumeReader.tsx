@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Upload } from 'lucide-react';
+import React, { useState, useRef } from "react";
+import { Upload } from "lucide-react";
 
 function ResumeReader() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -14,31 +14,31 @@ function ResumeReader() {
 
   const handleAnalyzeResume = async () => {
     if (!selectedFile) {
-      alert('Please select a file first.');
+      alert("Please select a file first.");
       return;
     }
 
     const formData = new FormData();
-    formData.append('file', selectedFile);
+    formData.append("file", selectedFile);
 
     try {
-      const response = await fetch('https://your-backend-api.com/analyze', {
-        method: 'POST',
+      const response = await fetch("https://your-backend-api.com/analyze", {
+        method: "POST",
         headers: {
-          'Authorization': 'Bearer YOUR_API_KEY', 
+          Authorization: "Bearer YOUR_API_KEY",
         },
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error('Failed to analyze resume');
+        throw new Error("Failed to analyze resume");
       }
 
       const result = await response.json();
       setAnalysisResult(result.analysis);
     } catch (error) {
-      console.error('Error analyzing resume:', error);
-      alert('Failed to analyze resume. Please try again.');
+      console.error("Error analyzing resume:", error);
+      alert("Failed to analyze resume. Please try again.");
     }
   };
 
@@ -78,9 +78,7 @@ function ResumeReader() {
             ref={fileInputRef}
             className="hidden"
           />
-          <p className="text-center text-gray-600">
-            Compatible files: PDF
-          </p>
+          <p className="text-center text-gray-600">Compatible files: PDF</p>
         </div>
         <button
           onClick={handleAnalyzeResume}
