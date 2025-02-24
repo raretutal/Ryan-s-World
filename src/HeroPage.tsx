@@ -3,18 +3,12 @@ import { Menu, Upload, X } from 'lucide-react';
 
 export function Navbar({ onMenuClick, setCurrentSection }: { onMenuClick: () => void; setCurrentSection: (section: string) => void }) {
   return (
-    <nav className="flex justify-between items-center p-6 fixed top-0 left-0 w-full bg-white z-50 shadow-md">
+    <nav className="flex justify-between items-center p-6 relative">
       <div className="flex items-center">
         <button onClick={onMenuClick} className="mr-4">
           <Menu className="w-8 h-8 text-[#002833]" />
         </button>
-        <img
-          src="/Logo.png"
-          alt="CertifBAI"
-          className="h-8 App-logo"
-          onClick={() => setCurrentSection('intro')}
-          style={{ cursor: 'pointer' }}
-        />
+        <img src="/Logo.png" alt="CertifBAI" className="h-8 App-logo" />
       </div>
       <div className="flex gap-4">
         <button onClick={() => setCurrentSection('about')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
@@ -79,7 +73,7 @@ export function MenuPanel({ isOpen, onClose, setCurrentSection }: { isOpen: bool
           About Us
         </button>
         <button onClick={() => { setCurrentSection('contact'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
-          Contact Us
+          Contact
         </button>
       </div>
     </div>

@@ -7,7 +7,7 @@ function AboutUs() {
         className="min-h-screen bg-[#002833] relative"
         style={{ top: "40px" }}
       >
-        <div className="w-full bg-white relative z-20" style={{ top: "10px" }}>
+        <div className="w-full bg-white relative z-20" style={{ top: "-10px" }}>
           <img
             src="AssistantIcon.png"
             alt="Logo"
