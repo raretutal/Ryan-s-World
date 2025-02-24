@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Menu, Upload, X } from 'lucide-react';
 
 export function Navbar({ onMenuClick, setCurrentSection }: { onMenuClick: () => void; setCurrentSection: (section: string) => void }) {
@@ -26,8 +26,29 @@ export function Navbar({ onMenuClick, setCurrentSection }: { onMenuClick: () => 
 }
 
 export function MenuPanel({ isOpen, onClose, setCurrentSection }: { isOpen: boolean; onClose: () => void; setCurrentSection: (section: string) => void }) {
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, onClose]);
+
   return (
     <div 
+      ref={panelRef}
       className={`fixed top-0 left-0 w-64 h-full bg-[#002833] transform transition-transform duration-300 ease-in-out z-50 ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
@@ -52,7 +73,7 @@ export function MenuPanel({ isOpen, onClose, setCurrentSection }: { isOpen: bool
           About Us
         </button>
         <button onClick={() => { setCurrentSection('contact'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
-          Contact Us
+          Contact
         </button>
       </div>
     </div>
