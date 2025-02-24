@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: white;
+}
+
+nav {
+  height: 80px; /* Set a fixed height for the header */
+}
+
+.App-logo {
+  height: 240px; /* Adjust the height as needed */
+  width: auto;  /* Maintain aspect ratio */
+  transition: all 0.3s ease-in-out; /* Smooth transition */
+}
+.AssistantDimension{
+  height: 200px;
+  width: 200px;
+}
+.about-us-image {
+  width: 100%; /* Make the image responsive */
+  max-width: 300px; /* Set a maximum width */
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 8px; /* Reduce space below the image */
+}
+
+hr {
+  border: none;
+  border-top: 2px solid #002833; /* Set the color and thickness of the line */
+  width: 100%;
+  max-width: 300px; /* Set a maximum width for the line */
+  margin: -10px 0; /* Reduce space above and below the line */
+}
+
+h2 {
+  font-size: 2.5rem; /* Set the font size */
+  color: #002833; /* Set the text color */
+  margin-bottom: 20px; /* Add some space below the heading */
+}
+
+p {
+  font-size: 1.125rem; /* Set the font size */
+  color: #333; /* Set the text color */
+  text-align: center; /* Center-align the text */
+  margin-bottom: 20px; /* Add some space below the paragraph */
+}
+
+@media (max-width: 688px) {
+  .App-logo {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100px; /* Adjust the height as needed */
+  }
+}
