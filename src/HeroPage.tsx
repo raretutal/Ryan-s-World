@@ -3,7 +3,7 @@ import { Menu, Upload, X } from 'lucide-react';
 
 export function Navbar({ onMenuClick, setCurrentSection }: { onMenuClick: () => void; setCurrentSection: (section: string) => void }) {
   return (
-    <nav className="flex justify-between items-center p-6 relative">
+    <nav className="flex justify-between items-center p-6 fixed top-0 left-0 w-full bg-white z-50 shadow-md">
       <div className="flex items-center">
         <button onClick={onMenuClick} className="mr-4">
           <Menu className="w-8 h-8 text-[#002833]" />
