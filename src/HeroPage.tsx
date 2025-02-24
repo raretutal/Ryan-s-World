@@ -1,9 +1,15 @@
-import React from 'react';
-import { Menu, Upload, X } from 'lucide-react';
+import React from "react";
+import { Menu, Upload, X } from "lucide-react";
 
-export function Navbar({ onMenuClick, setCurrentSection }: { onMenuClick: () => void; setCurrentSection: (section: string) => void }) {
+export function Navbar({
+  onMenuClick,
+  setCurrentSection,
+}: {
+  onMenuClick: () => void;
+  setCurrentSection: (section: string) => void;
+}) {
   return (
-    <nav className="flex justify-between items-center p-6 relative">
+    <nav className="flex justify-between items-center p-6 fixed top-0 left-0 w-full bg-white z-50 shadow-md">
       <div className="flex items-center">
         <button onClick={onMenuClick} className="mr-4">
           <Menu className="w-8 h-8 text-[#002833]" />
@@ -12,18 +18,27 @@ export function Navbar({ onMenuClick, setCurrentSection }: { onMenuClick: () => 
           src="/Logo.png"
           alt="CertifBAI"
           className="h-8 App-logo"
-          onClick={() => setCurrentSection('intro')}
-          style={{ cursor: 'pointer' }}
+          onClick={() => setCurrentSection("intro")}
+          style={{ cursor: "pointer" }}
         />
       </div>
       <div className="flex gap-4">
-        <button onClick={() => setCurrentSection('about')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
+        <button
+          onClick={() => setCurrentSection("about")}
+          className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors"
+        >
           About Us
         </button>
-        <button onClick={() => setCurrentSection('job')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
+        <button
+          onClick={() => setCurrentSection("job")}
+          className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors"
+        >
           Explore
         </button>
-        <button onClick={() => setCurrentSection('contact')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
+        <button
+          onClick={() => setCurrentSection("contact")}
+          className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors"
+        >
           Contact
         </button>
       </div>
@@ -31,11 +46,19 @@ export function Navbar({ onMenuClick, setCurrentSection }: { onMenuClick: () => 
   );
 }
 
-export function MenuPanel({ isOpen, onClose, setCurrentSection }: { isOpen: boolean; onClose: () => void; setCurrentSection: (section: string) => void }) {
+export function MenuPanel({
+  isOpen,
+  onClose,
+  setCurrentSection,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  setCurrentSection: (section: string) => void;
+}) {
   return (
-    <div 
+    <div
       className={`fixed top-0 left-0 w-64 h-full bg-[#002833] transform transition-transform duration-300 ease-in-out z-50 ${
-        isOpen ? 'translate-x-0' : '-translate-x-full'
+        isOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
       <div className="flex justify-between items-center p-6 border-b border-white/10">
@@ -45,19 +68,49 @@ export function MenuPanel({ isOpen, onClose, setCurrentSection }: { isOpen: bool
         </button>
       </div>
       <div className="p-6">
-        <button onClick={() => { setCurrentSection('intro'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
+        <button
+          onClick={() => {
+            setCurrentSection("intro");
+            onClose();
+          }}
+          className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors"
+        >
           Home
         </button>
-        <button onClick={() => { setCurrentSection('resume'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
+        <button
+          onClick={() => {
+            setCurrentSection("resume");
+            onClose();
+          }}
+          className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors"
+        >
           Resume Reader
         </button>
-        <button onClick={() => { setCurrentSection('job'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
+        <button
+          onClick={() => {
+            setCurrentSection("job");
+            onClose();
+          }}
+          className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors"
+        >
           Job Search
         </button>
-        <button onClick={() => { setCurrentSection('about'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
+        <button
+          onClick={() => {
+            setCurrentSection("about");
+            onClose();
+          }}
+          className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors"
+        >
           About Us
         </button>
-        <button onClick={() => { setCurrentSection('contact'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
+        <button
+          onClick={() => {
+            setCurrentSection("contact");
+            onClose();
+          }}
+          className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors"
+        >
           Contact
         </button>
       </div>
@@ -69,8 +122,10 @@ export function IntroSection() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] bg-white text-center p-6">
       <h1 className="text-7xl font-bold mb-8 text-[#002833]">
-        HELLO WORLD!<br />
-        I AM BAI, YOUR AI COMPANION FOR YOUR JOB<br />
+        HELLO WORLD!
+        <br />
+        I AM BAI, YOUR AI COMPANION FOR YOUR JOB
+        <br />
       </h1>
       <button className="px-8 py-3 rounded-full bg-[#002833] text-white text-lg hover:bg-[#003845] transition-colors">
         GET STARTED
