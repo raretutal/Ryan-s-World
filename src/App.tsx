@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Navbar, MenuPanel, IntroSection } from './HeroPage';
 import ResumeReader from './ResumeReader';
 import AboutUs from './AboutUs';
@@ -10,15 +11,19 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white">
-      <MenuPanel isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} setCurrentSection={setCurrentSection} />
-      <Navbar onMenuClick={() => setIsMenuOpen(true)} setCurrentSection={setCurrentSection} />
-      {currentSection === 'intro' && <IntroSection />}
-      {currentSection === 'job' && <JobSearch />}
-      {currentSection === 'resume' && <ResumeReader />}
-      {currentSection === 'about' && <AboutUs />}
-      {currentSection === 'contact' && <Contact />}
-    </div>
+    <Router>
+      <div className="min-h-screen bg-white">
+        <MenuPanel isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+        <Navbar onMenuClick={() => setIsMenuOpen(true)} />
+        <Routes>
+          <Route path="/" element={<IntroSection />} />
+          <Route path="/resume-reader" element={<ResumeReader />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/job" element={<JobSearch />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

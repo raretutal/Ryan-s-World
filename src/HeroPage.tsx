@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Menu, Upload, X, FileText, BarChart2, Award, Briefcase } from 'lucide-react';
 
-export function Navbar({ onMenuClick, setCurrentSection }: { onMenuClick: () => void; setCurrentSection: (section: string) => void }) {
+export function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
+  const navigate = useNavigate();
+
   return (
     <nav className="flex justify-between items-center p-6 relative z-20">
       <div className="flex items-center">
@@ -11,13 +14,13 @@ export function Navbar({ onMenuClick, setCurrentSection }: { onMenuClick: () => 
         <img src="/Logo.png" alt="CertifBAI" className="h-8 App-logo" />
       </div>
       <div className="flex gap-4">
-        <button onClick={() => setCurrentSection('about')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
+        <button onClick={() => navigate('/about')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
           About Us
         </button>
-        <button onClick={() => setCurrentSection('job')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
+        <button onClick={() => navigate('/job')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
           Explore
         </button>
-        <button onClick={() => setCurrentSection('contact')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
+        <button onClick={() => navigate('/contact')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
           Contact
         </button>
       </div>
@@ -25,7 +28,8 @@ export function Navbar({ onMenuClick, setCurrentSection }: { onMenuClick: () => 
   );
 }
 
-export function MenuPanel({ isOpen, onClose, setCurrentSection }: { isOpen: boolean; onClose: () => void; setCurrentSection: (section: string) => void }) {
+export function MenuPanel({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const navigate = useNavigate();
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -60,19 +64,19 @@ export function MenuPanel({ isOpen, onClose, setCurrentSection }: { isOpen: bool
         </button>
       </div>
       <div className="p-6">
-        <button onClick={() => { setCurrentSection('intro'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
+        <button onClick={() => { navigate('/'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
           Home
         </button>
-        <button onClick={() => { setCurrentSection('resume'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
+        <button onClick={() => { navigate('/resume-reader'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
           Resume Reader
         </button>
-        <button onClick={() => { setCurrentSection('job'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
+        <button onClick={() => { navigate('/job'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
           Job Search
         </button>
-        <button onClick={() => { setCurrentSection('about'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
+        <button onClick={() => { navigate('/about'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
           About Us
         </button>
-        <button onClick={() => { setCurrentSection('contact'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
+        <button onClick={() => { navigate('/contact'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
           Contact
         </button>
       </div>
@@ -81,6 +85,12 @@ export function MenuPanel({ isOpen, onClose, setCurrentSection }: { isOpen: bool
 }
 
 export function IntroSection() {
+  const navigate = useNavigate();
+
+  const handleGetStartedClick = () => {
+    navigate('/resume-reader');
+  };
+
   return (
     <div className="relative flex flex-col items-center justify-center min-h-[calc(100vh-80px)] bg-white text-center p-6">
       <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: 'url(HeroPageBG.png)' }}></div>
@@ -88,7 +98,7 @@ export function IntroSection() {
         HELLO!<br />
         I AM BAI, YOUR AI POWERED CAREER COMPANION<br />
       </h1>
-      <button className="px-8 py-3 rounded-full bg-[#002833] text-white text-lg hover:bg-[#003845] transition-colors relative z-10">
+      <button onClick={handleGetStartedClick} className="px-8 py-3 rounded-full bg-[#002833] text-white text-lg hover:bg-[#003845] transition-colors relative z-10">
         GET STARTED
       </button>
 
@@ -129,3 +139,5 @@ export function IntroSection() {
     </div>
   );
 }
+
+export default IntroSection;
