@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Menu, Upload, X } from 'lucide-react';
+import { Menu, Upload, X, FileText, BarChart2, Award, Briefcase } from 'lucide-react';
 
 export function Navbar({ onMenuClick, setCurrentSection }: { onMenuClick: () => void; setCurrentSection: (section: string) => void }) {
   return (
@@ -90,6 +90,41 @@ export function IntroSection() {
       <button className="px-8 py-3 rounded-full bg-[#002833] text-white text-lg hover:bg-[#003845] transition-colors">
         GET STARTED
       </button>
+
+      {/* Features Grid */}
+      <div className="container mx-auto px-4 py-16">
+        <h2 className="text-3xl font-bold text-center mb-12">How CertifBAI Helps You Succeed</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="p-8 bg-gray-100 rounded-lg shadow-lg flex items-center hover:bg-gray-200 transition-colors">
+            <FileText className="w-24 h-20 text-[#002833] mr-6" />
+            <div>
+              <h3 className="text-2xl font-bold text-[#002833]">Resume Analysis</h3>
+              <p className="text-[#002833]">Get detailed feedback on your resume and suggestions for improvement.</p>
+            </div>
+          </div>
+          <div className="p-8 bg-gray-100 rounded-lg shadow-lg flex items-center hover:bg-gray-200 transition-colors">
+            <BarChart2 className="w-24 h-20 text-[#002833] mr-6" />
+            <div>
+              <h3 className="text-2xl font-bold text-[#002833]">Skill Gap Analysis</h3>
+              <p className="text-[#002833]">Compare your skills against job requirements and identify areas for growth.</p>
+            </div>
+          </div>
+          <div className="p-8 bg-gray-100 rounded-lg shadow-lg flex items-center hover:bg-gray-200 transition-colors">
+            <Award className="w-24 h-20 text-[#002833] mr-6" />
+            <div>
+              <h3 className="text-2xl font-bold text-[#002833]">Certification Finder</h3>
+              <p className="text-[#002833]">Discover relevant certifications to enhance your qualifications.</p>
+            </div>
+          </div>
+          <div className="p-8 bg-gray-100 rounded-lg shadow-lg flex items-center hover:bg-gray-200 transition-colors">
+            <Briefcase className="w-24 h-20 text-[#002833] mr-6" />
+            <div>
+              <h3 className="text-2xl font-bold text-[#002833]">Job Matching</h3>
+              <p className="text-[#002833]">Find opportunities that match your skills and career goals.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

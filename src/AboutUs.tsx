@@ -28,8 +28,8 @@ function AboutUs() {
           <p className="text-center mb-8 text-lg text-[#F0EAD6]">
             We, CertifBAI, are a team of 5 students who are passionate about AI
             and its applications. <br />
-            We are currently working on a project that aims to help job seekers
-            to improve their resume <br />
+            We are currently working on a project that <br /> aims to help job seekers
+            to improve their resume 
             and increase their chances of getting hired.
           </p>
           <div className="flex space-x-4 mt-8">
