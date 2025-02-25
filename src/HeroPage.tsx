@@ -82,17 +82,18 @@ export function MenuPanel({ isOpen, onClose, setCurrentSection }: { isOpen: bool
 
 export function IntroSection() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] bg-white text-center p-6">
-      <h1 className="text-7xl font-bold mb-8 text-[#002833]">
-        HELLO WORLD!<br />
-        I AM BAI, YOUR AI COMPANION FOR YOUR JOB<br />
+    <div className="relative flex flex-col items-center justify-center min-h-[calc(100vh-80px)] bg-white text-center p-6">
+      <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: 'url(HeroPageBG.png)' }}></div>
+      <h1 className="text-7xl font-bold mb-8 text-[#002833] relative z-10">
+        HELLO!<br />
+        I AM BAI, YOUR AI POWERED CAREER COMPANION<br />
       </h1>
-      <button className="px-8 py-3 rounded-full bg-[#002833] text-white text-lg hover:bg-[#003845] transition-colors">
+      <button className="px-8 py-3 rounded-full bg-[#002833] text-white text-lg hover:bg-[#003845] transition-colors relative z-10">
         GET STARTED
       </button>
 
       {/* Features Grid */}
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-16 relative z-10">
         <h2 className="text-3xl font-bold text-center mb-12">How CertifBAI Helps You Succeed</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="p-8 bg-gray-100 rounded-lg shadow-lg flex items-center hover:bg-gray-200 transition-colors">
