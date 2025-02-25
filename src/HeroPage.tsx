@@ -3,7 +3,7 @@ import { Menu, Upload, X, FileText, BarChart2, Award, Briefcase } from 'lucide-r
 
 export function Navbar({ onMenuClick, setCurrentSection }: { onMenuClick: () => void; setCurrentSection: (section: string) => void }) {
   return (
-    <nav className="flex justify-between items-center p-6 relative">
+    <nav className="flex justify-between items-center p-6 relative z-20">
       <div className="flex items-center">
         <button onClick={onMenuClick} className="mr-4">
           <Menu className="w-8 h-8 text-[#002833]" />
