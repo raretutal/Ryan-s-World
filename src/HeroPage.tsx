@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Menu, Upload, X, FileText, BarChart2, Award, Briefcase } from 'lucide-react';
+import { Menu, Upload, X, FileText, BarChart2, Award, Briefcase, User } from 'lucide-react';
 
 export function Navbar({ onMenuClick, setCurrentSection }: { onMenuClick: () => void; setCurrentSection: (section: string) => void }) {
   return (
@@ -82,21 +82,26 @@ export function MenuPanel({ isOpen, onClose, setCurrentSection }: { isOpen: bool
 
 export function IntroSection() {
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-[calc(100vh-80px)] bg-white text-center p-6">
-      <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: 'url(HeroPageBG.png)' }}></div>
-      <h1 className="text-7xl font-bold mb-8 text-[#002833] relative z-10">
-        HELLO!<br />
-        I AM BAI, YOUR AI POWERED CAREER COMPANION<br />
-      </h1>
-      <button className="px-8 py-3 rounded-full bg-[#002833] text-white text-lg hover:bg-[#003845] transition-colors relative z-10">
-        GET STARTED
-      </button>
-
+    <div className="relative flex flex-col items-center justify-center min-h-[calc(120vh-80px)] bg-white text-center p-6">
+    <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: 'url(HeroPageBG.png)' }}></div>
+    <h1 className="text-7xl font-bold mb-16 text-[#002833] relative z-10">
+      HELLO!<br />
+      I AM BAI, YOUR AI POWERED CAREER COMPANION<br />
+    </h1>
+    <button
+      onClick={() => {
+        const jobCard = document.getElementById('jobCard');
+        jobCard?.scrollIntoView({ behavior: 'smooth' });
+      }}
+      className="px-8 py-3 rounded-full bg-[#002833] text-white font-bold text-lg hover:bg-[#003845] transition-colors relative z-10"
+    >
+      GET STARTED
+    </button>
       {/* Features Grid */}
       <div className="container mx-auto px-4 py-16 relative z-10">
         <h2 className="text-3xl font-bold text-center mb-12">How CertifBAI Helps You Succeed</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="p-8 bg-gray-100 rounded-lg shadow-lg flex items-center hover:bg-gray-200 transition-colors">
+          <div className="p-10 bg-gray-100 rounded-lg shadow-lg flex items-center hover:bg-gray-200 transition-colors">
             <FileText className="w-24 h-20 text-[#002833] mr-6" />
             <div>
               <h3 className="text-2xl font-bold text-[#002833]">Resume Analysis</h3>
@@ -126,6 +131,40 @@ export function IntroSection() {
           </div>
         </div>
       </div>
+    </div>  
+  );
+}
+
+{/* Centered Job Application Card */}
+export function CenteredJobApplicationCard() {
+  return (
+    <div id="jobCard" className="flex items-center justify-center min-h-screen bg-gray-50">
+      {/* Card Container */}
+      <div className="p-8 bg-gray-100 rounded-lg shadow-lg hover:bg-gray-200 transition-colors w-full max-w-2xl flex items-start">
+        {/* Icon */}
+        <img src="/AssistantIcon_search.png" alt="Assistant Icon" className="w-40 h-40 mr-4" />
+        <div className="flex flex-col w-full">
+          {/* Title */}
+          <h3 className="text-2xl font-bold text-[#002833] mb-4">
+            What job do you want to apply?
+          </h3>
+          {/* Text Input */}
+          <input
+            type="text"
+            placeholder="Enter job title"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg 
+                       focus:outline-none focus:ring-2 focus:ring-[#002833] mb-4"
+          />
+          {/* ENTER Button */}
+          <div className="flex justify-center">
+            <button className="bg-[#002833] text-white px-6 py-2 rounded-lg 
+                               hover:bg-opacity-90 transition-colors">
+              ENTER
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
+export default CenteredJobApplicationCard;
