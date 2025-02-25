@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Upload } from "lucide-react";
+import Chatbot from "./Chatbot";
 
 function ResumeReader() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -92,6 +93,9 @@ function ResumeReader() {
             <p>{analysisResult}</p>
           </div>
         )}
+      </div>
+      <div className="mt-8 w-full bg-gray-200 rounded-3xl p-12">
+        <Chatbot />
       </div>
     </div>
   );
