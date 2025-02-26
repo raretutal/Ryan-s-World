@@ -1,12 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function JobSearch() {
+  const [jobTitle, setJobTitle] = useState('');
+  const [sortBy, setSortBy] = useState('relevance');
+
+  const handleSearch = () => {
+    // Placeholder for search functionality
+    console.log(`Searching for ${jobTitle} jobs, sorted by ${sortBy}`);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white p-6">
-      <h2 className="text-4xl font-bold mb-8 text-[#002833]">Job Search</h2>
-      <p className="text-center mb-8 text-lg">
-        Job search functionality.
-      </p>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-12">
+      <h2 className="text-5xl font-bold mb-12 text-[#002833]">Job Search</h2>
+      <div className="bg-gray-200 p-8 rounded mb-12 w-full max-w-2xl">
+        <p className="text-center text-xl text-gray-700 mb-6">
+          Use our job search tool to find your next job or internship that match your skills and career goals.
+        </p>
+        <div className="mb-6 w-full">
+          <input
+            type="text"
+            placeholder="Job Title"
+            value={jobTitle}
+            onChange={(e) => setJobTitle(e.target.value)}
+            className="w-full px-6 py-3 border rounded mb-4 focus:outline-none focus:ring-2 focus:ring-[#002833]"
+          />
+          <div className="relative">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="w-full px-6 py-3 border rounded mb-4 focus:outline-none focus:ring-2 focus:ring-[#002833] appearance-none"
+            >
+              <option value="relevance">Sort by Relevance</option>
+              <option value="location">Sort by Nearest Location</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+            </div>
+          </div>
+        </div>
+        <button
+          onClick={handleSearch}
+          className="w-full px-6 py-3 bg-[#002833] text-white rounded hover:bg-[#004d66] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#002833]"
+        >
+          Search Jobs
+        </button>
+      </div>
     </div>
   );
 }
