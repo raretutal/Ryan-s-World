@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { FaRobot } from "react-icons/fa";
 
-const genAI = new GoogleGenerativeAI("AIzaSyBImsQJQfhfYGoPtuPIccEt3THC3dTDPJY");
+// Hides the Google API key using environmental variables.
+const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+const genAI = new GoogleGenerativeAI(apiKey);
 const generationConfig = {
   temperature: 0.75,
   topP: 1,
@@ -26,9 +28,13 @@ const Chatbot = () => {
   const handleSend = async () => {
     setIsLoading(true);
     setDisplayedResponse([]);
-    const result = await model.generateContent(input);
-    const responseText = result.response.text();
-    setResponse(responseText);
+    try {
+      const result = await model.generateContent(input);
+      const responseText = result.response.text();
+      setResponse(responseText);
+    } catch (error) {
+      console.error("Error generating content:", error);
+    }
     setIsLoading(false);
   };
 
