@@ -192,4 +192,20 @@ export function CenteredJobApplicationCard() {
   );
 }
 
-export default CenteredJobApplicationCard;
+export function Footer() {
+  return (
+    <footer className="bg-[#002833] text-white py-8">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="flex flex-col md:flex-row gap-4">
+            <a href="/about" className="hover:underline">About Us</a>
+            <a href="/contact" className="hover:underline">Contact</a>
+          </div>
+        </div>
+        <div className="text-center mt-4">
+          <p style={{ color: 'white', fontSize: '12px' }}>&copy; 2025 CertifBAI. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
