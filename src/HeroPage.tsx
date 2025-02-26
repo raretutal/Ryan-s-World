@@ -1,9 +1,27 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, Upload, X, FileText, BarChart2, Award, Briefcase } from 'lucide-react';
 
 export function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
   const navigate = useNavigate();
+  const [logoSrc, setLogoSrc] = useState('/Logo.png');
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 678) {
+        setLogoSrc('Logo2.png');
+      } else {
+        setLogoSrc('/Logo.png');
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Call once to set initial state
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <nav className="flex justify-between items-center p-6 relative z-20">
@@ -11,7 +29,7 @@ export function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
         <button onClick={onMenuClick} className="mr-4">
           <Menu className="w-8 h-8 text-[#002833]" />
         </button>
-        <img src="/Logo.png" alt="CertifBAI" className="h-8 App-logo" />
+        <img src={logoSrc} alt="CertifBAI" className="h-8 App-logo" />
       </div>
       <div className="flex gap-4">
         <button onClick={() => navigate('/about')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
@@ -85,26 +103,27 @@ export function MenuPanel({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
 }
 
 export function IntroSection() {
-  const navigate = useNavigate();
-
   const handleGetStartedClick = () => {
-    navigate('/resume-reader');
+    const jobCardElement = document.getElementById('jobCard');
+    if (jobCardElement) {
+      jobCardElement.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-[calc(100vh-80px)] bg-white text-center p-6">
+    <div className="relative flex flex-col items-center justify-center min-h-[calc(120vh-80px)] bg-white text-center p-6">
       <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: 'url(HeroPageBG.png)' }}></div>
-      <h1 className="text-7xl font-bold mb-8 text-[#002833] relative z-10">
+      <h1 className="text-7xl font-bold mb-16 text-[#002833] relative z-10">
         HELLO!<br />
         I AM BAI, YOUR AI POWERED CAREER COMPANION<br />
       </h1>
-      <button onClick={handleGetStartedClick} className="px-8 py-3 rounded-full bg-[#002833] text-white text-lg hover:bg-[#003845] transition-colors relative z-10">
+      <button onClick={handleGetStartedClick} className="px-10 py-5 rounded-full font-bold bg-[#002833] text-white text-lg hover:bg-[#003845] transition-colors relative z-10">
         GET STARTED
       </button>
 
       {/* Features Grid */}
       <div className="container mx-auto px-4 py-16 relative z-10">
-        <h2 className="text-3xl font-bold text-center mb-12">How CertifBAI Helps You Succeed</h2>
+        <h2 className="text-3xl font-bold text-center mb-16">How CertifBAI Helps You Succeed</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="p-8 bg-gray-100 rounded-lg shadow-lg flex items-center hover:bg-gray-200 transition-colors">
             <FileText className="w-24 h-20 text-[#002833] mr-6" />
@@ -140,4 +159,53 @@ export function IntroSection() {
   );
 }
 
-export default IntroSection;
+{/* Centered Job Application Card */}
+export function CenteredJobApplicationCard() {
+  return (
+    <div id="jobCard" className="flex items-center justify-center min-h-screen bg-gray-50">
+      {/* Card Container */}
+      <div className="p-8 bg-gray-100 rounded-lg shadow-lg hover:bg-gray-200 transition-colors w-full max-w-2xl flex items-start">
+        {/* Icon */}
+        <img src="/AssistantIcon_Search.png" alt="Assistant Icon" className="w-40 h-40 mr-4" />
+        <div className="flex flex-col w-full">
+          {/* Title */}
+          <h3 className="text-2xl font-bold text-[#002833] mb-4">
+            What job do you want to apply?
+          </h3>
+          {/* Text Input */}
+          <input
+            type="text"
+            placeholder="Enter job title"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg 
+                       focus:outline-none focus:ring-2 focus:ring-[#002833] mb-4"
+          />
+          {/* ENTER Button */}
+          <div className="flex justify-center">
+            <button className="bg-[#002833] text-white px-6 py-2 rounded-lg 
+                               hover:bg-opacity-90 transition-colors">
+              ENTER
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function Footer() {
+  return (
+    <footer className="bg-[#002833] text-white py-8">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="flex flex-col md:flex-row gap-4">
+            <a href="/about" className="hover:underline">About Us</a>
+            <a href="/contact" className="hover:underline">Contact</a>
+          </div>
+        </div>
+        <div className="text-center mt-4">
+          <p style={{ color: 'white', fontSize: '12px' }}>&copy; 2025 CertifBAI. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  );
+}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Navbar, MenuPanel, IntroSection } from './HeroPage';
+import { Navbar, MenuPanel, IntroSection, CenteredJobApplicationCard, Footer } from './HeroPage';
 import ResumeReader from './ResumeReader';
 import AboutUs from './AboutUs';
 import Contact from './Contact';
@@ -16,7 +16,13 @@ function App() {
         <MenuPanel isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
         <Navbar onMenuClick={() => setIsMenuOpen(true)} />
         <Routes>
-          <Route path="/" element={<IntroSection />} />
+          <Route path="/" element={
+            <>
+              <IntroSection />
+              <CenteredJobApplicationCard />
+              <Footer />
+            </>
+          } />
           <Route path="/resume-reader" element={<ResumeReader />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
