@@ -1,0 +1,8 @@
+This shi the backend, its where da scraping shi happens ya feel me.
+
+So like when ya run da program, ya gotta go to ze backend directory in the terminal first: 
+In the terminal type: "cd backend" to be working on the backend folder
+
+then type "node server.js"
+
+next go back to the main folder by typing "cd ." and proceed to "npm run dev"
