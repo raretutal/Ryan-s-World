@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Menu, Upload, X, FileText, BarChart2, Award, Briefcase } from 'lucide-react';
+import { Menu, Upload, X, FileText, BarChart2, Award, Briefcase, Edit, UploadCloud, Eye } from 'lucide-react';
 
 export function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
   const navigate = useNavigate();
@@ -111,7 +111,7 @@ export function IntroSection() {
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-[calc(120vh-80px)] bg-white text-center p-6">
+    <div className="relative flex flex-col items-center justify-center min-h-[calc(135vh-80px)] bg-white text-center p-6">
       <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: 'url(HeroPageBG.png)' }}></div>
       <h1 className="text-7xl font-bold mb-16 text-[#002833] relative z-10">
         HELLO!<br />
@@ -207,5 +207,85 @@ export function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+export function Tutorial() {
+  const steps = [
+    {
+      stepNumber: 1,
+      title: 'Enter your desired Job',
+      details: 'Let Bai know what job you want to apply.',
+      icon: <Edit className="w-12 h-12 text-[#002833] mb-4" style={{ width: '48px', height: '48px' }} />
+    },
+    {
+      stepNumber: 2,
+      title: 'Upload your Resume',
+      details: 'Simply choose your Resume file from your device. CertifBAI only supports PDF Files.',
+      icon: <UploadCloud className="w-12 h-12 text-[#002833] mb-4" style={{ width: '48px', height: '48px' }} />
+    },
+    {
+      stepNumber: 3,
+      title: "See Bai's Insights",
+      details: 'Get detailed feedback on your resume and suggestions for improvement.',
+      icon: <Eye className="w-12 h-12 text-[#002833] mb-4" style={{ width: '48px', height: '48px' }} />
+    },
+  ];
+
+  return (
+    <section className="py-10 px-4 bg-white">
+      <h2 className="text-3xl font-bold text-center mb-8 text-[#002833]">
+        How to Enhance Your Resume with CertifBAI
+      </h2>
+      <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+        {steps.map((item) => (
+          <div
+            key={item.stepNumber}
+            className="
+              group 
+              relative 
+              w-64 
+              h-60 
+              border 
+              border-gray-300 
+              rounded-lg 
+              overflow-hidden 
+              p-4 
+              text-center 
+              transition-all 
+              duration-500 
+              hover:h-80 
+              hover:shadow-lg
+              cursor-pointer
+              flex
+              flex-col
+              items-center
+              justify-center
+            "
+          >
+            <div className="flex items-center justify-center w-12 h-12 mb-4">
+              {item.icon}
+            </div>
+            <h3 className="text-xl font-semibold text-[#002833]">
+              Step {item.stepNumber}
+            </h3>
+            <p className="mt-2 text-[#002833]">{item.title}</p>
+
+            {/* Hidden details that appear on hover */}
+            <p
+              className="
+                hidden 
+                group-hover:block 
+                mt-4 
+                text-sm 
+                text-gray-600
+              "
+            >
+              {item.details}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
