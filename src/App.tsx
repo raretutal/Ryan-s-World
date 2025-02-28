@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Navbar, MenuPanel, IntroSection, CenteredJobApplicationCard, Footer } from './HeroPage';
+import { Navbar, MenuPanel, IntroSection, CenteredJobApplicationCard, Footer, Tutorial } from './HeroPage';
 import ResumeReader from './ResumeReader';
 import AboutUs from './AboutUs';
 import Contact from './Contact';
@@ -19,6 +19,7 @@ function App() {
           <Route path="/" element={
             <>
               <IntroSection />
+              <Tutorial />
               <CenteredJobApplicationCard />
               <Footer />
             </>
