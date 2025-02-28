@@ -4,30 +4,37 @@ import { FaRobot } from "react-icons/fa";
 
 const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-thinking-exp" });
-
-interface ChatbotProps {
-  resumeText: string;
-  systemInstructions?: string;
-}
-
-const Chatbot: React.FC<ChatbotProps> = ({
-  resumeText,
-  systemInstructions = `
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.0-flash-thinking-exp",
+  systemInstruction: `
   You are a resume analysis assistant. Your goal is to help the user analyze their resume, and provide
   them with a skill gap analysis between then and the current job market. You can also give them tips into
   how they can improve their resume. You can give them links for where they can get certifications or where they can
-  learn courses. But first, you will be given their resume. 
+  learn courses. But first, you will be given their resume.
 
-  You are to give the skillgap analysis in a bullet like manner, like a side by side comparison. Give them their
-  strenghts and weaknesses as well. 
+  You are to give the skill gap analysis in a bullet-like manner, like a side-by-side comparison. Give them their
+  strengths and weaknesses as well. You are only to focus on the job aspect of their prompt. If they ask you about
+  anything else, you are to remind them that you are only able to help with skill gap analysis and nothing else.
 
-  Be careful to make sure that you are giving them real links if you intend to give them link for certifications, and courses.
-  Make your responses concise, make it at most 200 words, and be sure to stick to the point.
-  If ever the user tries to steer the conversation away from the resume analysis and its improvement, 
-  be sure to remind them that you are here to analyze their resume, and help them improve it.
-  `
-}) => {
+  Be careful to ensure that you provide real links if giving certifications or course recommendations.
+  Make your responses concise, at most 200 words, and stick to the point.
+  If the user deviates from resume analysis or its improvement, remind them that you only analyze resumes.
+  If no resume is uploaded, ask them to upload one.
+  If the uploaded file is not a resume, tell them that you only analyze resumes and request a proper resume.
+  `,
+  generationConfig: {
+    maxOutputTokens: 100000,
+    temperature: 0.5,
+    topK: 1,
+    topP: 1,
+  }}
+);
+
+interface ChatbotProps {
+  resumeText: string;
+}
+
+const Chatbot: React.FC<ChatbotProps> = ({ resumeText }) => {
   const [input, setInput] = useState("");
   const [response, setResponse] = useState("Resume uploaded successfully. You can now type your message.");
   const [isLoading, setIsLoading] = useState(false);
@@ -43,13 +50,15 @@ const Chatbot: React.FC<ChatbotProps> = ({
   }, [resumeText]);
 
   const handleSend = async () => {
-    // Removed error checks for resume extraction failure.
+    // If no prompt is entered, do nothing.
+    if (!input.trim()) {
+      return;
+    }
     setIsLoading(true);
     setFadeIn(false);
     try {
-      const result = await model.generateContent(
-        systemInstructions + "\n" + resumeText + "\n" + input
-      );
+      // Only pass resumeText and user input; system instructions are already applied.
+      const result = await model.generateContent([resumeText, input]);
       const fullResponse = result.response.text();
       setResponse(fullResponse);
       animateResponse(fullResponse);
@@ -99,7 +108,7 @@ const Chatbot: React.FC<ChatbotProps> = ({
     whiteSpace: "pre-wrap", // allow newline characters to create new lines
     fontFamily: "Noto Sans, sans-serif", // use Noto Sans font
     fontSize: "16px", // set font size to 16px
-    textAlign: "left", // left-align text for better readability
+    textAlign: "justify", // organize text for readability
   };
 
   return (
@@ -120,7 +129,7 @@ const Chatbot: React.FC<ChatbotProps> = ({
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Type your message here..."
+            placeholder="What is your desired job?"
             className="w-full px-4 py-2 border border-gray-300 rounded"
           />
         </div>
