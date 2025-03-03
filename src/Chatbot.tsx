@@ -58,6 +58,61 @@ interface ChatbotProps {
   resumeText: string;
 }
 
+// New function: Query Astra DB for relevant job data based on the resume text.
+const queryAstraDB = async (resumeText: string): Promise<string> => {
+  const astraToken = import.meta.env.VITE_ASTRA_DB_TOKEN;
+  const keyspace = import.meta.env.VITE_ASTRA_KEYSPACE;
+
+  // Updated CQL query to select the new columns and set the LIMIT to 500.
+  const query = {
+    cql: `
+      SELECT EdLevel, YearsCode, YearsCodePro, DevType,
+             LanguageHaveWorkedWith, DatabaseHaveWorkedWith,
+             PlatformHaveWorkedWith, WebframeHaveWorkedWith
+      FROM ${keyspace}.developer_profiles
+      LIMIT 500;
+    `
+  };
+
+  try {
+    // Updated fetch URL to use the Vite proxy and the new table name
+    const response = await fetch(
+      `/astra/api/rest/v2/keyspaces/${keyspace}/developer_profiles`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Cassandra-Token": astraToken,
+        },
+        body: JSON.stringify(query),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Astra DB query failed");
+    }
+
+    const data = await response.json();
+    const rows = data.data;
+
+    if (!rows || rows.length === 0) {
+      return "No matching profiles found in Astra DB.";
+    }
+
+    const resultText = rows
+      .map(
+        (row: any) =>
+          `EdLevel: ${row.EdLevel}, YearsCode: ${row.YearsCode}, YearsCodePro: ${row.YearsCodePro}, DevType: ${row.DevType}, Languages: ${row.LanguageHaveWorkedWith}, Databases: ${row.DatabaseHaveWorkedWith}, Platforms: ${row.PlatformHaveWorkedWith}, Webframes: ${row.WebframeHaveWorkedWith}`
+      )
+      .join("\n\n");
+
+    return resultText;
+  } catch (error) {
+    console.error("Error querying Astra DB:", error);
+    return "No additional job data available.";
+  }
+};
+
 const Chatbot: React.FC<ChatbotProps> = ({ resumeText }) => {
   // Tracks whether we've finished the first analysis
   const [analysisDone, setAnalysisDone] = useState(false);
@@ -109,7 +164,12 @@ const Chatbot: React.FC<ChatbotProps> = ({ resumeText }) => {
       // Initial PDF analysis
       let finalResult = "";
       try {
-        const result = await model.generateContent([resumeText]);
+        // Query Astra DB for relevant job data
+        const jobData = await queryAstraDB(resumeText);
+        // Combine resume text with Astra DB results
+        const combinedPrompt = `${resumeText}\n\nRelevant Jobs from Astra DB:\n${jobData}`;
+
+        const result = await model.generateContent([combinedPrompt]);
         let fullResponse = result.response.text();
         fullResponse = formatResponse(fullResponse);
 
