@@ -202,7 +202,7 @@ const ResumeReader: React.FC = () => {
       </div>
 
       {/* Chatbot rendered below with extracted resume text as prop */}
-      <Chatbot resumeText={extractedText} systemInstructions="" />
+      <Chatbot resumeText={extractedText} />
     </>
   );
 };
