@@ -2,6 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, Upload, X, FileText, BarChart2, Award, Briefcase, Edit, UploadCloud, Eye } from 'lucide-react';
 
+import { 
+  FaFacebook, 
+  FaTwitter, 
+  FaInstagram, 
+  FaTiktok,
+  FaMapMarkerAlt,
+  FaPhone,
+  FaEnvelope
+} from 'react-icons/fa';
+
 export function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
   const navigate = useNavigate();
   const [logoSrc, setLogoSrc] = useState('/Logo.png');
@@ -29,7 +39,12 @@ export function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
         <button onClick={onMenuClick} className="mr-4">
           <Menu className="w-8 h-8 text-[#002833]" />
         </button>
-        <img src={logoSrc} alt="CertifBAI" className="h-8 App-logo" />
+        <img 
+          src={logoSrc} 
+          alt="CertifBAI" 
+          className="h-8 App-logo cursor-pointer" 
+          onClick={() => navigate('/')} 
+        />
       </div>
       <div className="flex gap-4">
         <button onClick={() => navigate('/about')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
@@ -112,7 +127,7 @@ export function IntroSection() {
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-[calc(135vh-80px)] bg-white text-center p-6">
-      <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: 'url(HeroPageBG.png)' }}></div>
+      <div className="absolute inset-0 bg-cover bg-center opacity-100" style={{ backgroundImage: 'url(HeroPageBG.png)' }}></div>
       <h1 className="text-7xl font-bold mb-16 text-[#002833] relative z-10">
         HELLO!<br />
         I AM BAI, YOUR AI POWERED CAREER COMPANION<br />
@@ -159,51 +174,86 @@ export function IntroSection() {
   );
 }
 
-{/* Centered Job Application Card */}
-export function CenteredJobApplicationCard() {
-  return (
-    <div id="jobCard" className="flex items-center justify-center min-h-screen bg-gray-50">
-      {/* Card Container */}
-      <div className="p-8 bg-gray-100 rounded-lg shadow-lg hover:bg-gray-200 transition-colors w-full max-w-2xl flex items-start">
-        {/* Icon */}
-        <img src="/AssistantIcon_Search.png" alt="Assistant Icon" className="w-40 h-40 mr-4" />
-        <div className="flex flex-col w-full">
-          {/* Title */}
-          <h3 className="text-2xl font-bold text-[#002833] mb-4">
-            What job do you want to apply?
-          </h3>
-          {/* Text Input */}
-          <input
-            type="text"
-            placeholder="Enter job title"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg 
-                       focus:outline-none focus:ring-2 focus:ring-[#002833] mb-4"
-          />
-          {/* ENTER Button */}
-          <div className="flex justify-center">
-            <button className="bg-[#002833] text-white px-6 py-2 rounded-lg 
-                               hover:bg-opacity-90 transition-colors">
-              ENTER
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export function Footer() {
   return (
-    <footer className="bg-[#002833] text-white py-8">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="flex flex-col md:flex-row gap-4">
-            <a href="/about" className="hover:underline">About Us</a>
-            <a href="/contact" className="hover:underline">Contact</a>
+    <footer className="bg-[#002833] text-white mt-0">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          {/* Brand Section */}
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold tracking-tight">CertifBAI</h2>
+            <p className="text-sm text-gray-300">
+            "Accelerate Your Growth, One Insight at a Time"
+            </p>
+          </div>
+
+          {/* Contact Info */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold"></h3>
+            <div className="flex items-center space-x-2">
+              <FaMapMarkerAlt className="w-5 h-5 text-gray-400" />
+              <p className="text-sm text-gray-300">1234 Innovation Blvd, Tech City, TX 12345</p>
+            </div>
+            <div className="flex items-center space-x-2">
+              <FaPhone className="w-4 h-4 text-gray-400" />
+              <p className="text-sm text-gray-300">(123) 456-7890</p>
+            </div>
+            <div className="flex items-center space-x-2">
+              <FaEnvelope className="w-4 h-4 text-gray-400" />
+              <p className="text-sm text-gray-300">info@certifbai.com</p>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Quick Links</h3>
+            <nav className="flex flex-col space-y-2">
+              <a href="/about" className="text-sm text-gray-300 hover:text-white transition-colors">
+                About Us
+              </a>
+              <a href="/services" className="text-sm text-gray-300 hover:text-white transition-colors">
+                Services
+              </a>
+              <a href="/contact" className="text-sm text-gray-300 hover:text-white transition-colors">
+                Contact
+              </a>
+              <a href="/faq" className="text-sm text-gray-300 hover:text-white transition-colors">
+                FAQ
+              </a>
+            </nav>
+          </div>
+
+          {/* Social Media */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Follow Us</h3>
+            <div className="flex space-x-4">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors">
+                <FaFacebook className="w-5 h-5" />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors">
+                <FaTwitter className="w-5 h-5" />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors">
+                <FaInstagram className="w-5 h-5" />
+              </a>
+              <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors">
+                <FaTiktok className="w-5 h-5" />
+              </a>
+            </div>
           </div>
         </div>
-        <div className="text-center mt-4">
-          <p style={{ color: 'white', fontSize: '12px' }}>&copy; 2025 CertifBAI. All rights reserved.</p>
+
+        {/* Divider */}
+        <div className="border-t border-white/20 my-8" />
+
+        {/* Copyright */}
+        <div className="text-center pt-6">
+          <p className="text-sm text-gray-400">
+            © 2025 CertifBAI. All rights reserved. 
+            <a href="/privacy" className="ml-4 hover:text-white transition-colors">Privacy Policy</a>
+            <a href="/terms" className="ml-4 hover:text-white transition-colors">Terms of Service</a>
+          </p>
         </div>
       </div>
     </footer>
@@ -214,30 +264,34 @@ export function Tutorial() {
   const steps = [
     {
       stepNumber: 1,
-      title: 'Enter your desired Job',
-      details: 'Let Bai know what job you want to apply.',
-      icon: <Edit className="w-12 h-12 text-[#002833] mb-4" style={{ width: '48px', height: '48px' }} />
+      title: 'Upload your Resume',
+      details: 'Simply choose your Resume file from your device. CertifBAI only supports PDF Files.',
+      icon: <img src="T1.png" alt="Step 1" className="w-24 h-24 mb-4" />
     },
     {
       stepNumber: 2,
-      title: 'Upload your Resume',
-      details: 'Simply choose your Resume file from your device. CertifBAI only supports PDF Files.',
-      icon: <UploadCloud className="w-12 h-12 text-[#002833] mb-4" style={{ width: '48px', height: '48px' }} />
+      title: 'Wait for Bai to Analyze',
+      details: 'Bai thoroughly analyzes your resume to give you accurate insights',
+      icon: <img src="T2.png" alt="Step 2" className="w-24 h-24 mb-4" />
     },
     {
       stepNumber: 3,
       title: "See Bai's Insights",
       details: 'Get detailed feedback on your resume and suggestions for improvement.',
-      icon: <Eye className="w-12 h-12 text-[#002833] mb-4" style={{ width: '48px', height: '48px' }} />
+      icon: <img src="T3.png" alt="Step 3" className="w-24 h-24 mb-4" />
     },
   ];
 
   return (
-    <section className="py-10 px-4 bg-white">
-      <h2 className="text-3xl font-bold text-center mb-8 text-[#002833]">
-        How to Enhance Your Resume with CertifBAI
+    <section className="py-12 px-11 bg-white relative">
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-50"
+        style={{ backgroundImage: 'url(Tutorial_bgImage.png)' }}
+      ></div>
+      <h2 className="text-3xl font-bold text-center mb-16 text-[#002833] relative z-10">
+        How to Enhance Your Resume with CertifBAI ?
       </h2>
-      <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-20 relative z-10">
         {steps.map((item) => (
           <div
             key={item.stepNumber}
@@ -253,7 +307,7 @@ export function Tutorial() {
               p-4 
               text-center 
               transition-all 
-              duration-500 
+              duration-300 
               hover:h-80 
               hover:shadow-lg
               cursor-pointer
@@ -261,12 +315,13 @@ export function Tutorial() {
               flex-col
               items-center
               justify-center
+              bg-white
             "
           >
-            <div className="flex items-center justify-center w-12 h-12 mb-4">
+            <div className="flex items-center justify-center w-24 h-24 mb-4">
               {item.icon}
             </div>
-            <h3 className="text-xl font-semibold text-[#002833]">
+            <h3 className="text-xl font-bold text-[#002833]">
               Step {item.stepNumber}
             </h3>
             <p className="mt-2 text-[#002833]">{item.title}</p>
