@@ -135,8 +135,8 @@ const ResumeReader: React.FC = () => {
     transform: isClicked
       ? 'scale(0.95)'
       : isHovered
-      ? 'scale(1.05) rotate(2deg)'
-      : 'scale(1) rotate(0deg)',
+      ? 'scale(1.05)'
+      : 'scale(1)',
     boxShadow: isHovered ? '0 8px 16px rgba(0,0,0,0.2)' : 'none'
   };
 
@@ -145,9 +145,9 @@ const ResumeReader: React.FC = () => {
       {/* Main Resume Reader Container */}
       <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', textAlign: 'center' }}>
         {/* Header */}
-        <h2 style={{ marginBottom: '10px' }}>Resume Reader</h2>
+        <h2 style={{ marginBottom: '10px', fontFamily: 'Helvetica, sans-serif', fontWeight: 'bold' }}>Resume Reader</h2>
         <p style={{ color: '#555', marginBottom: '30px' }}>
-          Upload resume to get feedback and suggestion with BAI
+        Upload your resume to get feedback and learn about potential job possibilities at BAI
         </p>
 
         {/* Dynamic, cartoony dashed container for PDF upload */}
@@ -202,7 +202,7 @@ const ResumeReader: React.FC = () => {
       </div>
 
       {/* Chatbot rendered below with extracted resume text as prop */}
-      <Chatbot resumeText={extractedText} systemInstructions="" />
+      <Chatbot resumeText={extractedText} />
     </>
   );
 };

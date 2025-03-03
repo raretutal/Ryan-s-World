@@ -288,7 +288,7 @@ export function Tutorial() {
         className="absolute inset-0 bg-cover bg-center opacity-50"
         style={{ backgroundImage: 'url(Tutorial_bgImage.png)' }}
       ></div>
-      <h2 className="text-3xl font-bold text-center mb-16 text-[#002833] relative z-10">
+      <h2 className="text-3xl font-bold text-center mb-8 text-[#002833] relative z-10">
         How to Enhance Your Resume with CertifBAI ?
       </h2>
       <div className="flex flex-col md:flex-row items-center justify-center gap-20 relative z-10">
