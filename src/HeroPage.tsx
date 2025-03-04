@@ -47,14 +47,14 @@ export function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
         />
       </div>
       <div className="flex gap-4">
-        <button onClick={() => navigate('/about')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
-          About Us
-        </button>
         <button onClick={() => navigate('/job')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
           Explore
         </button>
+        <button onClick={() => navigate('/about')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
+          About Us
+        </button>
         <button onClick={() => navigate('/contact')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
-          Contact
+          Contact Us
         </button>
       </div>
     </nav>
@@ -91,7 +91,7 @@ export function MenuPanel({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
       }`}
     >
       <div className="flex justify-between items-center p-6 border-b border-white/10">
-        <span className="text-white text-xl">Menu</span>
+        <span className="text-white text-xl">Tools</span>
         <button onClick={onClose} className="text-white">
           <X className="w-6 h-6" />
         </button>
@@ -106,23 +106,17 @@ export function MenuPanel({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
         <button onClick={() => { navigate('/job'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
           Job Search
         </button>
-        <button onClick={() => { navigate('/about'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
-          About Us
-        </button>
-        <button onClick={() => { navigate('/contact'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
-          Contact
-        </button>
+        
       </div>
     </div>
   );
 }
 
 export function IntroSection() {
+  const navigate = useNavigate();
+
   const handleGetStartedClick = () => {
-    const jobCardElement = document.getElementById('jobCard');
-    if (jobCardElement) {
-      jobCardElement.scrollIntoView({ behavior: 'smooth' });
-    }
+    navigate('/resume-reader');
   };
 
   return (
