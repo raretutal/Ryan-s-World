@@ -16,9 +16,13 @@ How to setup certifBAI:
 2. Run npm install in the terminal.
 3. Generate an API key from PDFco and Google Generative AI.
 4. Create a .env file with the same directory level as of the folder of the git hub repository.
-5. Put this in the .env file: VITE_PDF_CO_API_KEY=<your API key here>
+   
+6. Put this in the .env file: VITE_PDF_CO_API_KEY=<your API key here>
                               VITE_GOOGLE_API_KEY=<your API key here>
-6. Run the file named "server.js" in the proxy-server folder (you have to change directory).
-7. Do npm run dev in the main directory to run the website.
+                              
+7. Run the file named "server.js" in the proxy-server folder (you have to change directory).
+8. Do npm run dev in the main directory to run the website.
+
+The website should now be up and running!
 
 
