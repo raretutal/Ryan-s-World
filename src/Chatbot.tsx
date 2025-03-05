@@ -14,6 +14,9 @@ You have to be more specific the lacking qualifications. Indicate what the score
 Remember, keep it professional, concise, and as much as possible, make it short if it doesn't need to be long.
 
 Your return format would be like this:
+//NOTE: These should all be in bold except for the actual information to be provided.
+
+Profile Analysis
 
 Name: (Person's Name)
 
@@ -129,19 +132,18 @@ const Chatbot: React.FC<ChatbotProps> = ({ resumeText }) => {
   }, [resumeText, analysisDone]);
 
   const handleSend = async () => {
-    // If there's no resume text and analysis is not done, do nothing
     if (!analysisDone && (!resumeText || !resumeText.trim())) {
       return;
     }
+  
     setIsLoading(true);
     setFadeIn(false);
+  
     if (!analysisDone) {
-      // Initial PDF analysis
+      // Initial Resume Analysis
       let finalResult = "";
       try {
-        // Query CSV data from your backend
         const csvData = await queryCSVData();
-        // Combine resume text with CSV summary
         const combinedPrompt = `${resumeText}\n\nRelevant Jobs from CSV Data:\n${csvData}`;
         const result = await model.generateContent([combinedPrompt]);
         let fullResponse = result.response.text();
@@ -158,26 +160,48 @@ const Chatbot: React.FC<ChatbotProps> = ({ resumeText }) => {
         setAnalysisDone(true);
       }
     } else {
-      // Conversation mode after the initial analysis
+      // Conversation Mode (After Resume Analysis)
       if (!input.trim()) {
         setIsLoading(false);
         return;
       }
+  
       const userMsg: { type: "user"; text: string } = { type: "user", text: input };
-      let botMsg: { type: "bot"; text: string } = { type: "bot", text: "" };
+      let botMsg: { type: "bot"; text: string } = { type: "bot", text: "" }; // ✅ Fixed Type
+  
       try {
-        const result = await model.generateContent([resumeText, input]);
+        // New conversation prompt
+        const conversationPrompt = `
+        You are now chatting with the user. Use the following resume information as context, but DO NOT repeat the resume analysis.
+        
+        Resume Information:
+        ${resumeText}
+  
+        User's Question:
+        ${input}
+        
+        Respond naturally, as if you are a career coach having a conversation. Answer ONLY the user's question. If you can't answer, just say so.
+
+        If the user asks something completely unrelated to the context. Tell the user that you are a career coach and that you cannot help with that request
+        `;
+  
+        const result = await model.generateContent([conversationPrompt]);
         let fullResponse = result.response.text();
         fullResponse = formatResponse(fullResponse);
         botMsg.text = fullResponse;
       } catch (error) {
         console.error("Error generating content:", error);
-        botMsg.text = "An error occurred while analyzing your resume. Please try again.";
+        botMsg.text = "An error occurred while responding. Please try again.";
       }
-      setMessages((prev) => [...prev, userMsg, botMsg]);
+  
+      // Ensure `setMessages` works correctly
+      setMessages((prevMessages) => [...prevMessages, userMsg, botMsg]);
       setIsLoading(false);
     }
+  
+    setInput(""); // Clear input field after sending message
   };
+  
 
   // Minimal formatting fix for tables/pipes:
   const formatResponse = (text: string): string => {
