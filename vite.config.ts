@@ -2,6 +2,8 @@ import { defineConfig } from "vite";
 import path from "path";
 import react from '@vitejs/plugin-react';
 
+const token = process.env.VITE_ASTRA_DB_TOKEN as string;
+
 export default defineConfig({
   plugins: [react()],
   resolve: {
@@ -21,10 +23,15 @@ export default defineConfig({
   server: {
     proxy: {
       '/astra': {
-        target: 'https://9647bdff-737a-4438-9b3b-8da27a20e5e3-us-east-2.apps.astra.datastax.com',
+        target: 'https://17f0756f-70ba-4a49-b7b2-4b0e4850822c-us-east-2.apps.astra.datastax.com',
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/astra/, ''),
+        configure: (proxy, options) => {
+          proxy.on('proxyReq', (proxyReq, req, res) => {
+            proxyReq.setHeader('X-Cassandra-Token', token);
+          });
+        },
       },
     },
   },
