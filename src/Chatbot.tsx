@@ -9,8 +9,6 @@ const model = genAI.getGenerativeModel({
   systemInstruction: `
 You an assistant that helps a person find the job they are most likely to get based on their resume.
 
-But before that:
-
 Your goal is to give them a small analysis of their resume with respect to the top 5 jobs their resume closely qualifies for. You have to rate how qualified I am on a scale from 1-10
 (1-3 for lacking a lot of experience,4-7 for lack a bit of experience, 8 - 10 for Qualified). 
 You have to be more specific the lacking qualifications. Indicate what the scores mean, and be VERY STRICT at grading. The highest rating would be the best fit job by default. 
@@ -25,7 +23,11 @@ Name: (Person's Name)
 
 Best Job You Qualify For: (Job Title)
 
-Rating:                                                             
+Rating:
+//Show the emoji the same number of times to the score
+//If the users rating is between 8-10, show 🟩 beside the number
+//If the users rating is between 4-7, show 🟨beside the number
+//If the users rating is between 1-3, show 🟥 beside the number                                               
 
 Already Acquired Qualifications:  (Be short and concise, like using bullet points to just list things. Remember to address the user, not the resume.)
 
@@ -58,39 +60,12 @@ If you can't answer the question, just say you can't answer it.
     topP: 0.5,
   },
 });
-const isResume = (text: string): boolean => {
-  const resumeKeywords = [
-    "work experience",
-    "education",
-    "skills",
-    "summary",
-    "objective",
-    "certifications",
-    "projects",
-    "contact information",
-    "technical skills",
-    "languages",
-    "internships",
-    "educational attainment",
-    "educational background",
-    "achievements",
-    "qualifications",
-  ];
-
-  const lowerText = text.toLowerCase();
-
-  // ✅ Must contain at least **2 or more** resume-related sections
-  const resumeMatchCount = resumeKeywords.filter((word) =>
-    lowerText.includes(word)
-  ).length;
-
-  return resumeMatchCount >= 2;
-};
 
 interface ChatbotProps {
   resumeText: string;
   fileVersion: number; // Added to detect file changes
 }
+
 
 // New function: Query CSV data via your backend endpoint.
 const queryCSVData = async (): Promise<string> => {
@@ -114,9 +89,7 @@ const queryCSVData = async (): Promise<string> => {
       sample
         .map(
           (row: any, index: number) =>
-            `Record ${index + 1}: YearsCode: ${row.yearscode}, YearsCodePro: ${
-              row.yearscodepro
-            }, DevType: ${row.devtype}`
+            `Record ${index + 1}: YearsCode: ${row.yearscode}, YearsCodePro: ${row.yearscodepro}, DevType: ${row.devtype}`
         )
         .join("\n");
     return resultText;
@@ -153,9 +126,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ resumeText, fileVersion }) => {
 
   useEffect(() => {
     if (resumeText) {
-      setResponse(
-        "Resume uploaded successfully. You can now type your message."
-      );
+      setResponse("Resume uploaded successfully. You can now type your message.");
     }
   }, [resumeText]);
 
@@ -168,27 +139,16 @@ const Chatbot: React.FC<ChatbotProps> = ({ resumeText, fileVersion }) => {
       handleSend();
     }
   }, [resumeText, fileVersion]); // Trigger when fileVersion changes
+  
 
   const handleSend = async () => {
-    if (!resumeText || !resumeText.trim()) {
-      return;
-    }
-
-    // Validate if it's actually a resume
-    if (!isResume(resumeText)) {
-      setResponse(
-        "❌ The uploaded document does not appear to be a resume. Please upload a resume for analysis."
-      );
-      return;
-    }
-
     if (!analysisDone && (!resumeText || !resumeText.trim())) {
       return;
     }
-
+  
     setIsLoading(true);
     setFadeIn(false);
-
+  
     if (!analysisDone) {
       // Initial Resume Analysis
       let finalResult = "";
@@ -201,8 +161,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ resumeText, fileVersion }) => {
         finalResult = fullResponse;
       } catch (error) {
         console.error("Error generating content:", error);
-        finalResult =
-          "An error occurred while analyzing your resume. Please try again.";
+        finalResult = "An error occurred while analyzing your resume. Please try again.";
       } finally {
         setIsLoading(false);
         setAnalysisResult(finalResult);
@@ -216,13 +175,10 @@ const Chatbot: React.FC<ChatbotProps> = ({ resumeText, fileVersion }) => {
         setIsLoading(false);
         return;
       }
-
-      const userMsg: { type: "user"; text: string } = {
-        type: "user",
-        text: input,
-      };
+  
+      const userMsg: { type: "user"; text: string } = { type: "user", text: input };
       let botMsg: { type: "bot"; text: string } = { type: "bot", text: "" }; // ✅ Fixed Type
-
+  
       try {
         // New conversation prompt
         const conversationPrompt = `
@@ -238,7 +194,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ resumeText, fileVersion }) => {
 
         If the user asks something completely unrelated to the context. Tell the user that you are a career coach and that you cannot help with that request
         `;
-
+  
         const result = await model.generateContent([conversationPrompt]);
         let fullResponse = result.response.text();
         fullResponse = formatResponse(fullResponse);
@@ -247,14 +203,15 @@ const Chatbot: React.FC<ChatbotProps> = ({ resumeText, fileVersion }) => {
         console.error("Error generating content:", error);
         botMsg.text = "An error occurred while responding. Please try again.";
       }
-
+  
       // Ensure `setMessages` works correctly
       setMessages((prevMessages) => [...prevMessages, userMsg, botMsg]);
       setIsLoading(false);
     }
-
+  
     setInput(""); // Clear input field after sending message
   };
+  
 
   // Minimal formatting fix for tables/pipes:
   const formatResponse = (text: string): string => {
@@ -267,17 +224,13 @@ const Chatbot: React.FC<ChatbotProps> = ({ resumeText, fileVersion }) => {
 
   const parseMarkdown = (text: string): string => {
     // Escape HTML characters to prevent injection
-    const escapedText = text.replace(
-      /[&<>"']/g,
-      (char) =>
-        ({
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#39;",
-        }[char] ?? char)
-    );
+    const escapedText = text.replace(/[&<>"']/g, (char) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[char] ?? char));
     // Convert markdown links to HTML
     let result = escapedText.replace(
       /\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g,
@@ -468,16 +421,8 @@ const Chatbot: React.FC<ChatbotProps> = ({ resumeText, fileVersion }) => {
             </div>
           )}
           {displayedResponse && (
-            <div
-              className="mt-4 p-2 bg-gray-100 border border-gray-300 rounded"
-              style={bubbleContainerStyle}
-            >
-              <p
-                style={responseStyle}
-                dangerouslySetInnerHTML={{
-                  __html: parseMarkdown(displayedResponse),
-                }}
-              ></p>
+            <div className="mt-4 p-2 bg-gray-100 border border-gray-300 rounded" style={bubbleContainerStyle}>
+              <p style={responseStyle} dangerouslySetInnerHTML={{ __html: parseMarkdown(displayedResponse) }}></p>
             </div>
           )}
         </div>
@@ -490,15 +435,9 @@ const Chatbot: React.FC<ChatbotProps> = ({ resumeText, fileVersion }) => {
       <style>{keyframeStyle}</style>
       <div style={{ position: "relative", minHeight: "100vh" }}>
         <div style={resultSheetStyle}>
-          <p
-            style={{ ...responseStyle, opacity: 1 }}
-            dangerouslySetInnerHTML={{ __html: parseMarkdown(analysisResult) }}
-          ></p>
+          <p style={{ ...responseStyle, opacity: 1 }} dangerouslySetInnerHTML={{ __html: parseMarkdown(analysisResult) }}></p>
         </div>
-        <div
-          style={floatingBubbleStyle}
-          onClick={() => setIsChatOpen(!isChatOpen)}
-        >
+        <div style={floatingBubbleStyle} onClick={() => setIsChatOpen(!isChatOpen)}>
           <FaRobot size={30} />
         </div>
         {isChatOpen && (
@@ -509,11 +448,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ resumeText, fileVersion }) => {
             </div>
             <div style={chatMessagesStyle}>
               {messages.map((msg, index) => (
-                <div
-                  key={index}
-                  style={messageStyle(msg.type)}
-                  dangerouslySetInnerHTML={{ __html: parseMarkdown(msg.text) }}
-                />
+                <div key={index} style={messageStyle(msg.type)} dangerouslySetInnerHTML={{ __html: parseMarkdown(msg.text) }} />
               ))}
             </div>
             <div style={chatInputContainerStyle}>
@@ -540,10 +475,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ resumeText, fileVersion }) => {
                   }
                 }}
               />
-              <button
-                onClick={handleSend}
-                className="w-full px-4 py-2 mt-2 bg-[#002833] text-white rounded"
-              >
+              <button onClick={handleSend} className="w-full px-4 py-2 mt-2 bg-[#002833] text-white rounded">
                 {isLoading ? "Thinking..." : "Send"}
               </button>
             </div>
