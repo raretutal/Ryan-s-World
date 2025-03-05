@@ -88,6 +88,7 @@ async function convertPdfToText(
 const ResumeReader: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [extractedText, setExtractedText] = useState<string>(""); // Initially empty
+  const [fileVersion, setFileVersion] = useState<number>(0);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -104,19 +105,22 @@ const ResumeReader: React.FC = () => {
     const file = event.target.files?.[0];
     if (file) {
       setSelectedFile(file);
+      setExtractedText("Processing PDF...");
+  
       try {
-        setExtractedText("Processing PDF...");
         const fileName = file.name;
         const [uploadUrl, uploadedFileUrl] = await getPresignedUrl(API_KEY, fileName);
         await uploadFile(file, uploadUrl);
         const text = await convertPdfToText(API_KEY, uploadedFileUrl);
+  
         setExtractedText(text || "No text found in PDF.");
+        setFileVersion((prev) => prev + 1); // ✅ Increment version to force Chatbot reset
       } catch (error: any) {
         console.error("Error processing PDF:", error);
         setExtractedText("Failed to process PDF: " + error.message);
       }
     }
-  }, []);
+  }, []);  
 
   // Dynamic style for the upload box.
   const boxStyle = {
@@ -202,7 +206,7 @@ const ResumeReader: React.FC = () => {
       </div>
 
       {/* Chatbot rendered below with extracted resume text as prop */}
-      <Chatbot resumeText={extractedText} />
+      <Chatbot resumeText={extractedText} fileVersion={fileVersion}/>
     </>
   );
 };

@@ -8,6 +8,9 @@ const model = genAI.getGenerativeModel({
   model: "learnlm-1.5-pro-experimental",
   systemInstruction: `
 You an assistant that helps a person find the job they are most likely to get based on their resume.
+
+But before that:
+
 Your goal is to give them a small analysis of their resume with respect to the top 5 jobs their resume closely qualifies for. You have to rate how qualified I am on a scale from 1-10
 (1-3 for lacking a lot of experience,4-7 for lack a bit of experience, 8 - 10 for Qualified). 
 You have to be more specific the lacking qualifications. Indicate what the scores mean, and be VERY STRICT at grading. The highest rating would be the best fit job by default. 
@@ -58,7 +61,9 @@ If you can't answer the question, just say you can't answer it.
 
 interface ChatbotProps {
   resumeText: string;
+  fileVersion: number; // Added to detect file changes
 }
+
 
 // New function: Query CSV data via your backend endpoint.
 const queryCSVData = async (): Promise<string> => {
@@ -92,7 +97,7 @@ const queryCSVData = async (): Promise<string> => {
   }
 };
 
-const Chatbot: React.FC<ChatbotProps> = ({ resumeText }) => {
+const Chatbot: React.FC<ChatbotProps> = ({ resumeText, fileVersion }) => {
   // Tracks whether we've finished the first analysis
   const [analysisDone, setAnalysisDone] = useState(false);
 
@@ -125,11 +130,14 @@ const Chatbot: React.FC<ChatbotProps> = ({ resumeText }) => {
 
   // Auto-trigger analysis once resumeText is available and analysis is not done
   useEffect(() => {
-    if (resumeText && resumeText.trim() !== "" && !analysisDone) {
+    if (resumeText && resumeText.trim() !== "") {
+      setAnalysisDone(false); // Reset chatbot state
+      setAnalysisResult("");
+      setMessages([]);
       handleSend();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resumeText, analysisDone]);
+  }, [resumeText, fileVersion]); // Trigger when fileVersion changes
+  
 
   const handleSend = async () => {
     if (!analysisDone && (!resumeText || !resumeText.trim())) {
