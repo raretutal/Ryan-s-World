@@ -47,9 +47,6 @@ export function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
         />
       </div>
       <div className="flex gap-4">
-        <button onClick={() => navigate('/job')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
-          Explore
-        </button>
         <button onClick={() => navigate('/about')} className="px-6 py-2 rounded-full bg-[#002833] text-white hover:bg-[#003845] transition-colors">
           About Us
         </button>
@@ -101,12 +98,11 @@ export function MenuPanel({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
           Home
         </button>
         <button onClick={() => { navigate('/resume-reader'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
-          Resume Reader
+          CertifBai
         </button>
-        <button onClick={() => { navigate('/job'); onClose(); }} className="w-full text-left text-white py-3 hover:text-gray-300 transition-colors">
-          Job Search
-        </button>
-        
+      </div>
+      <div className="absolute bottom-0 left-0 w-full p-6 border-t border-white/10">
+        <span className="text-white text-sm">Version 1.0.0</span>
       </div>
     </div>
   );
@@ -167,7 +163,6 @@ export function IntroSection() {
     </div>
   );
 }
-
 
 export function Footer() {
   return (
@@ -282,7 +277,7 @@ export function Tutorial() {
         className="absolute inset-0 bg-cover bg-center opacity-50"
         style={{ backgroundImage: 'url(Tutorial_bgImage.png)' }}
       ></div>
-      <h2 className="text-3xl font-bold text-center mb-8 text-[#002833] relative z-10">
+      <h2 className="text-3xl font-bold text-center mb-16 text-[#002833] relative z-10">
         How to Enhance Your Resume with CertifBAI ?
       </h2>
       <div className="flex flex-col md:flex-row items-center justify-center gap-20 relative z-10">
